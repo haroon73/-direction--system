@@ -1,0 +1,78 @@
+.center-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    width: 300px;
+}
+
+.logo-img {
+    max-height: 40px;
+}
+
+.body {
+    background: linear-gradient(0.25turn, #3f87a6, #19a5a5, rgb(128, 60, 246));
+}
+
+.horizontal-box {
+    background-color:azure;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 2000px; /* Adjust the max-width as needed */
+    text-align: center;
+}
+
+.narrative-box {
+    background-color: aliceblue;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-bottom: 20px; /* Add margin-bottom for spacing */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.none {
+    margin-top: 150px;
+    text-align: center;
+    align-content: center;
+    padding: 50px;
+}
+
+.narrative-box ol {
+    padding-left: 0; /* Remove default list padding */
+    text-align: center;
+}
+
+.narrative-box li {
+    margin-bottom: 10px; /* Add margin-bottom for spacing between list items */
+    text-align: center;
+}
+
+.navbar {
+    background: linear-gradient(0.25turn, #3f87a6, #19a5a5, rgb(128, 60, 246));
+}
+
+.map{
+    margin-top: 15px;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 95%;
+    height: 100%;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ul{
+    list-style-type: none;
+}
+
+h3{
+    text-align: center;
+}

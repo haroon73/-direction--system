@@ -1,0 +1,38 @@
+.direction-history-container {
+    padding: 20px;
+}
+
+.navbar {
+    background: linear-gradient(0.25turn, #3f87a6, #19a5a5, rgb(128, 60, 246));
+}
+
+.none {
+    margin-top: 150px;
+    text-align: center;
+    align-content: center;
+    padding: 50px;
+}
+
+.history-entry {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: white;
+}
+
+.logo-img {
+    max-height: 40px;
+}
+
+.map{
+    margin-top: 15px;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 95%;
+    height: 100%;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

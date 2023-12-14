@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index2.css') }}">
+    <title>Map Display</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand">Map Display</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/index">Home</a>
+                    </li>
+                    <li>
+                        <a class="nav-link active" href="/index2">Multiple Directions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/direction_history">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"> Logout</a>
+                    </li>
+                </ul>
+    
+    <form class="row g-3" method="post">
+        
+        <div  class="col-auto" >
+        <!-- <label   for="origin">Origin:</label> -->
+       </div>
+       <div class="col-auto">
+        <input type="text" name="origin"  class="form-control me-2" placeholder="Origin" required>
+    </div>
+    <div class="col-auto">
+        <!-- <label for="destination1">Destination one:</label> -->
+    </div>
+    <div class="col-auto">
+        <input type="text" name="destination1" class="form-control me-2" placeholder="Destination One" required>
+    </div>
+    <div class="col-auto">
+        <!-- <label for="destination2">Destination two:</label> -->
+    </div>
+    <div class="col-auto">
+        <input type="text" name="destination2" class="form-control me-2" placeholder="Destination Two" required>
+    </div>
+    <div class="col-auto">
+        <!-- <label for="destination3">Destination three:</label> -->
+    </div>
+    <div class="col-auto">
+        <input type="text" name="destination3" class="form-control me-2" placeholder="Destination Three" required>
+    </div>
+     <div class="col-auto">
+        <button type="submit" class="btn btn-dark me-2" >Get Route</button>
+    </div>
+  
+    </form>
+</nav>
+    
+   
+  
+
+    {% if route_info %}
+      
+
+        {% if route_info.distance < route_info1.distance and route_info.distance < route_info2.distance %}
+            <h3 class="card-title"> First stop start from  {{ origin }} to {{ destination1 }} distance is {{ route_info.distance }} miles
+                and Estimated Duration is {{ route_info.formattedTime }} </h3>
+
+          <div class="narrative-box">
+            <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+          </div>
+
+             {% if route_info1.distance < route_info2.distance %}
+            <h3 class="card-title"> Second stop start from {{ destination1 }} to {{ destination2 }}  distance is {{ route_info1.distance }} miles
+                and Estimated Duration is {{ route_info1.formattedTime }} </h3>
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info1['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+                </div>
+            {% else %}
+            
+            <h3 class="card-title"> Second stop start from {{ destination1 }} to {{ destination3 }}  distance is {{ route_info2.distance }} miles
+                and Estimated Duration is {{ route_info2.formattedTime }} </h3>
+
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info2['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+                </div>
+            {% endif %}
+
+
+             {% if route_info1.distance > route_info2.distance %}
+            <h3 class="card-title"> Third stop start from {{ destination3 }} to {{ destination2 }}  distance is {{ route_info1.distance }} miles
+                and Estimated Duration is {{ route_info1.formattedTime }} </h3>
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info1['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+                </div>
+            {% else %}
+            
+            <h3 class="card-title"> Third stop start from {{ destination2 }} to {{ destination3 }}  distance is {{ route_info2.distance }} miles
+                and Estimated Durationis {{ route_info2.formattedTime }} </h3>
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info2['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+                </div>
+            {% endif %}
+            <h2>First stop map</h2>
+            {% if static_map_url %}
+            <img src="{{ static_map_url }}" alt="Map" class="w-50 p-3">
+            {% endif %}
+            <!-- End of if -->
+            <!-- Start of elif -->
+            {% elif route_info1.distance < route_info.distance and route_info1.distance < route_info2.distance %}
+            <h3 class="card-title"> First stop start from {{ origin }} to {{ destination2 }}  distance is {{ route_info1.distance }} miles
+                and Estimated Duration is {{ route_info1.formattedTime }} </h3>
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info1['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+                </div>
+            {% if route_info.distance < route_info2.distance %}
+            <h3 class="card-title"> Second stop start from {{ destination2 }} to {{ destination1 }}  distance is {{ route_info.distance }} miles
+                and Estimated Duration is {{ route_info.formattedTime }} </h3>
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+                </div>
+            {% else %}
+            
+            <h3 class="card-title"> Second sto start from {{ destination2 }} to {{ destination3 }}  distance is {{ route_info2.distance }} miles
+                and Estimated Duration is {{ route_info2.formattedTime }} </h3>
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info2['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+                </div>
+            {% endif %}
+             {% if route_info.distance > route_info2.distance %}
+            <h3 class="card-title"> Third stop start from {{ destination3 }} to {{ destination1 }}  distance is {{ route_info.distance }} miles
+                and Estimated Duration is {{ route_info.formattedTime }} </h3>
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+                </div>
+            {% else %}
+            
+            <h3 class="card-title"> Third stop start from {{ destination1 }} to {{ destination3 }}  distance is {{ route_info2.distance }} miles
+                and Estimated Duration is {{ route_info2.formattedTime }} </h3>
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+            <ul>
+                {% for leg in route_info2['legs'] %}
+                {% for maneuver in leg['maneuvers'] %}
+                    <li>{{ maneuver['narrative'] }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+                </div>
+            {% endif %}
+            <h2>First stop map</h2>
+            {% if static_map_url %}
+            <img src="{{ static_map_url1 }}" alt="Map" class="w-50 p-3">
+            {% endif %}
+            <!-- End of elif -->
+            <!-- start of else -->
+            {%else%}
+            <h3 class="card-title"> First stop start from {{ origin }} to {{ destination3 }}  distance is {{ route_info2.distance }} miles
+                and Estimated Duration is {{ route_info2.formattedTime }} </h3>
+                <div class="narrative-box">
+                    <h4>Narrative Instructions:</h4>
+                <ul>
+                    {% for leg in route_info2['legs'] %}
+                    {% for maneuver in leg['maneuvers'] %}
+                        <li>{{ maneuver['narrative'] }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+                </div>
+                 {% if route_info.distance < route_info1.distance %}
+                <h3 class="card-title"> Second stop start from {{ destination3 }} to {{ destination1 }}  distance is {{ route_info.distance }} miles
+                    and Estimated Duration is {{ route_info.formattedTime }} </h3>
+                    <div class="narrative-box">
+                        <h4>Narrative Instructions:</h4>
+                <ul>
+                    {% for leg in route_info['legs'] %}
+                    {% for maneuver in leg['maneuvers'] %}
+                        <li>{{ maneuver['narrative'] }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+                    </div>
+                {% else %}
+                
+                <h3 class="card-title"> Second stop start from {{ destination3 }} to {{ destination2 }} distance is {{ route_info1.distance }} miles
+                    and Estimated Duration is {{ route_info1.formattedTime }} </h3>
+                    <div class="narrative-box">
+                        <h4>Narrative Instructions:</h4>
+                <ul>
+                    {% for leg in route_info1['legs'] %}
+                    {% for maneuver in leg['maneuvers'] %}
+                        <li>{{ maneuver['narrative'] }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+                    </div>
+                {% endif %}
+                 {% if route_info.distance > route_info1.distance %}
+                <h3 class="card-title"> Third stop start from {{ destination2 }} to {{ destination1 }} distance is {{ route_info.distance }} miles
+                    and Estimated Duration is {{ route_info.formattedTime }} </h3>
+                    <div class="narrative-box">
+                        <h4>Narrative Instructions:</h4>
+                <ul>
+                    {% for leg in route_info['legs'] %}
+                    {% for maneuver in leg['maneuvers'] %}
+                        <li>{{ maneuver['narrative'] }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+                    </div>
+                {% else %}
+                
+                <h3 class="card-title"> Third stop start from {{ destination1 }} to {{ destination2 }} distance is {{ route_info1.distance }} miles
+                    and Estimated Duration is {{ route_info1.formattedTime }} </h3>
+                    <div class="narrative-box">
+                        <h4>Narrative Instructions:</h4>
+                <ul>
+                    {% for leg in route_info1['legs'] %}
+                    {% for maneuver in leg['maneuvers'] %}
+                        <li>{{ maneuver['narrative'] }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+                    </div>
+                {% endif %}
+                <h2>First stop map</h2>
+                {% if static_map_url %}
+                <img src="{{ static_map_url2 }}" alt="Map" class="w-50 p-3">
+                {% endif %}
+                {%endif%}
+        
+    {% else %}
+        <!-- Display a different image when there are no directions -->
+        <div class="none">   
+            <h4>Enter an "Origin" and your "Destinations" above to get the quickest route!</h4>
+            <img src="static/images/no_directions_image.jpg" alt="No Directions" style="width: 20%; height: auto; border-radius: 8px; box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); display: block; margin: auto;">
+        </div>
+    {% endif %}
+   
+</body>
+</html>
